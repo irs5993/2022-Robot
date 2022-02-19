@@ -4,39 +4,64 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.kinematics.MecanumDriveMotorVoltages;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveTeleopCommand;
-import frc.robot.helpers.DriveValues;
+import frc.robot.commands.DriveTimedCommand;
+import frc.robot.helpers.Math;
+import frc.robot.helpers.MecanumControlSupplier;
 
 
 public class RobotContainer {
   // Defining the joystick
-  private final Joystick joystick = new Joystick(Constants.JOYSTICK);
+  public static final Joystick joystick = new Joystick(Constants.JOYSTICK);
 
   // Defining Subsystems 
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 
   // Defining Commands
+  private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.4, 0, 0), 5);
+  private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.4, 0, 0), 5);
+  private final DriveTimedCommand autoTest3 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0, 0, 0.6), 5);
+  SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-
+  
   public RobotContainer() {
     configureButtonBindings();
-
-    // Set the default command for subsystems
-    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, new DriveValues(joystick.getX(), joystick.getY(), joystick.getZ())));
+    configureCommands();
+    configureDashboard();   
   }
 
   private void configureButtonBindings() {}
 
+  public void configureCommands() {
+    // Setting up the auto chooser
+    autoChooser.setDefaultOption("Drive Forward", autoTest1);
+    autoChooser.addOption("Drive Backward", autoTest2);
+    autoChooser.addOption("Turn Right", autoTest3);
+
+    // Setting the default commands of the subsystems
+    double multiplier = Math.map(joystick.getRawAxis(3), 0, 1, 0.3, 1);
+    MecanumControlSupplier controller = new MecanumControlSupplier(joystick.getX() * multiplier, joystick.getY() * multiplier, joystick.getZ() * multiplier);
+
+    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, controller));
+  }
+
+  public void configureDashboard() {
+    SmartDashboard.putData(autoChooser);
+    SmartDashboard.putData("Drivetrain Subsystem", drivetrainSubsystem);
+  }
+
   public Command getAutonomousCommand() {
-    return new WaitCommand(2);
+    return autoChooser.getSelected();
   }
 }

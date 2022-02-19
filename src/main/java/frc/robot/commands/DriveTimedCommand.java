@@ -4,20 +4,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.commands.Base.TimedCommand;
 import frc.robot.helpers.MecanumControlSupplier;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class DriveTeleopCommand extends CommandBase {
+public class DriveTimedCommand extends TimedCommand {
   private final DrivetrainSubsystem drivetrainSubsystem;
   private final MecanumControlSupplier mecanumControlSupplier;
 
-  public DriveTeleopCommand(DrivetrainSubsystem drivetrainSubsystem, MecanumControlSupplier mecanumControlSupplier) {
+  public DriveTimedCommand(DrivetrainSubsystem drivetrainSubsystem, MecanumControlSupplier mecanumControlSupplier, double time) {
+    super(time);
+
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.mecanumControlSupplier = mecanumControlSupplier;
-
-    addRequirements(drivetrainSubsystem);
   }
 
   @Override
@@ -28,10 +27,5 @@ public class DriveTeleopCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drivetrainSubsystem.stop();
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
