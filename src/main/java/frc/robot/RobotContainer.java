@@ -4,26 +4,39 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.MecanumDriveMotorVoltages;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+
+import frc.robot.subsystems.DrivetrainSubsystem;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.DriveTeleopCommand;
+import frc.robot.helpers.DriveValues;
+
 
 public class RobotContainer {
+  // Defining the joystick
+  private final Joystick joystick = new Joystick(Constants.JOYSTICK);
+
   // Defining Subsystems 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 
   // Defining Commands
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+
 
   public RobotContainer() {
     configureButtonBindings();
+
+    // Set the default command for subsystems
+    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, new DriveValues(joystick.getX(), joystick.getY(), joystick.getZ())));
   }
 
   private void configureButtonBindings() {}
 
   public Command getAutonomousCommand() {
-    return m_autoCommand;
+    return new WaitCommand(2);
   }
 }
