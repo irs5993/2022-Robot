@@ -4,20 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.math.kinematics.MecanumDriveMotorVoltages;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.DriveTimedCommand;
-import frc.robot.helpers.Math;
 import frc.robot.helpers.MecanumControlSupplier;
 
 
@@ -33,7 +27,6 @@ public class RobotContainer {
   private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.4, 0, 0), 5);
   private final DriveTimedCommand autoTest3 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0, 0, 0.6), 5);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
-
   
   public RobotContainer() {
     configureButtonBindings();
@@ -50,10 +43,7 @@ public class RobotContainer {
     autoChooser.addOption("Turn Right", autoTest3);
 
     // Setting the default commands of the subsystems
-    double multiplier = Math.map(joystick.getRawAxis(3), 0, 1, 0.3, 1);
-    MecanumControlSupplier controller = new MecanumControlSupplier(joystick.getX() * multiplier, joystick.getY() * multiplier, joystick.getZ() * multiplier);
-
-    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, controller));
+    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, new MecanumControlSupplier(joystick.getX(), joystick.getY(), joystick.getZ()), joystick.getRawAxis(3)));
   }
 
   public void configureDashboard() {

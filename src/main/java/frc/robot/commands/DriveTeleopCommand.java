@@ -6,23 +6,34 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.helpers.RMath;
+
 import frc.robot.helpers.MecanumControlSupplier;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class DriveTeleopCommand extends CommandBase {
   private final DrivetrainSubsystem drivetrainSubsystem;
   private final MecanumControlSupplier mecanumControlSupplier;
+  private final double slider;
 
-  public DriveTeleopCommand(DrivetrainSubsystem drivetrainSubsystem, MecanumControlSupplier mecanumControlSupplier) {
+  private final double
+    min_mult = 0.3,
+    max_mult = 1.0;
+
+  public DriveTeleopCommand(DrivetrainSubsystem drivetrainSubsystem, MecanumControlSupplier mecanumControlSupplier, double slider) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.mecanumControlSupplier = mecanumControlSupplier;
+    this.slider = slider;
 
     addRequirements(drivetrainSubsystem);
   }
 
   @Override
   public void execute() {
-    drivetrainSubsystem.drive(mecanumControlSupplier.getX(), mecanumControlSupplier.getY(), mecanumControlSupplier.getZ());
+    double multiplier = RMath.map(slider, 0, 1, min_mult, max_mult);
+    mecanumControlSupplier.multiply(multiplier);
+
+    drivetrainSubsystem.drive(mecanumControlSupplier);
   }
 
   @Override

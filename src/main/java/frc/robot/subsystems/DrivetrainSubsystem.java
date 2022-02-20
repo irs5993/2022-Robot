@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.helpers.MecanumControlSupplier;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private final PWMVictorSPX left_front;
@@ -26,8 +27,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     drive_base = new MecanumDrive(left_front, left_rear, right_front, right_rear);
   }
 
-  public void drive(double x, double y, double z) {
-    drive_base.driveCartesian(x, y, z);
+  public void drive(MecanumControlSupplier mecanumControlSupplier) {
+    drive_base.driveCartesian(mecanumControlSupplier.getX(), mecanumControlSupplier.getY(), mecanumControlSupplier.getZ());
   }
 
   public void stop() {

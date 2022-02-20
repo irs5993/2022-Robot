@@ -14,14 +14,16 @@ public class DriveTimedCommand extends TimedCommand {
 
   public DriveTimedCommand(DrivetrainSubsystem drivetrainSubsystem, MecanumControlSupplier mecanumControlSupplier, double time) {
     super(time);
-
+    
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.mecanumControlSupplier = mecanumControlSupplier;
+
+    addRequirements(drivetrainSubsystem);
   }
 
   @Override
   public void execute() {
-    drivetrainSubsystem.drive(mecanumControlSupplier.getX(), mecanumControlSupplier.getY(), mecanumControlSupplier.getZ());
+    drivetrainSubsystem.drive(mecanumControlSupplier);
   }
 
   @Override
