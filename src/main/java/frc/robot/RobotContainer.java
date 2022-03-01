@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.DriveTimedCommand;
 import frc.robot.helpers.MecanumControlSupplier;
@@ -19,12 +21,12 @@ public class RobotContainer {
   // Defining the joystick
   public static final Joystick joystick = new Joystick(Constants.JOYSTICK);
 
-  // Defining Subsystems 
+  // Defining subsystems 
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 
-  // Defining Commands
-  private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.4, 0, 0), 5);
-  private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.4, 0, 0), 5);
+  // Defining commands
+  private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.5, 0, 0), 5);
+  private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest3 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0, 0, 0.6), 5);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
   
@@ -43,7 +45,7 @@ public class RobotContainer {
     autoChooser.addOption("Turn Right", autoTest3);
 
     // Setting the default commands of the subsystems
-    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, new MecanumControlSupplier(joystick.getX(), joystick.getY(), joystick.getZ()), joystick.getRawAxis(3)));
+    drivetrainSubsystem.setDefaultCommand(new DriveTeleopCommand(drivetrainSubsystem, joystick));
   }
 
   public void configureDashboard() {

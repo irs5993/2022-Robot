@@ -28,7 +28,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(MecanumControlSupplier mecanumControlSupplier) {
-    drive_base.driveCartesian(mecanumControlSupplier.getX(), mecanumControlSupplier.getY(), mecanumControlSupplier.getZ());
+    drive_base.driveCartesian(mecanumControlSupplier.getY(), mecanumControlSupplier.getX(), mecanumControlSupplier.getZ());
   }
 
   public void stop() {

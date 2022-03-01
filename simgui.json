@@ -1,0 +1,55 @@
+{
+  "HALProvider": {
+    "PWM Outputs": {
+      "0": {
+        "name": "LEFT FRONT"
+      },
+      "1": {
+        "name": "LEFT REAR"
+      },
+      "2": {
+        "name": "RIGHT FRONT"
+      },
+      "3": {
+        "name": "RIGHT REAR"
+      },
+      "window": {
+        "visible": true
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/DrivetrainSubsystem": "Subsystem",
+      "/LiveWindow/Ungrouped/MecanumDrive[1]": "MecanumDrive",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Drivetrain Subsystem": "Subsystem",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    },
+    "windows": {
+      "/LiveWindow/Ungrouped/Scheduler": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SendableChooser[0]": {
+        "window": {
+          "name": "Auto Chooser",
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "LiveWindow": {
+      "open": true
+    }
+  },
+  "sourceNames": {
+    "PWM[0]": "LEFT FRONT",
+    "PWM[1]": "LEFT REAR",
+    "PWM[2]": "RIGHT FRONT",
+    "PWM[3]": "RIGHT REAR"
+  }
+}
