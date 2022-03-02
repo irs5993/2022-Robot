@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.DriveTimedCommand;
@@ -24,13 +25,12 @@ public class RobotContainer {
   // Defining subsystems 
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-
+  
   // Defining commands
   private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest3 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0, 0, 0.6), 5);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
-  
   public RobotContainer() {
     configureButtonBindings();
     configureCommands();
