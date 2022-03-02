@@ -44,6 +44,9 @@
   "NetworkTables": {
     "LiveWindow": {
       "open": true
+    },
+    "SmartDashboard": {
+      "open": true
     }
   },
   "sourceNames": {

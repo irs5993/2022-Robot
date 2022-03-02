@@ -34,14 +34,16 @@ public final class Constants {
 
         public static class Shooter {
             public static final int 
-            LEFT = 6,
-            RIGHT = 7;
+            LEFT_LOWER = 6,
+            RIGHT_LOWER = 7,
+            LEFT_UPPER = 8,
+            RIGHT_UPPER = 9;
         }
 
         public static class Climber {
             public static final int 
-            LEFT = 8,
-            RIGHT = 9;
+            LEFT = 10,
+            RIGHT = 11;
         }
     }
 }
