@@ -18,6 +18,7 @@ public final class Constants {
     public static class ButtonMap {}
 
     public static class DriverPorts {
+        public static final int VISION_LED = 12;
         public static class Drivetrain {
             public static final int 
             LEFT_FRONT = 0,
