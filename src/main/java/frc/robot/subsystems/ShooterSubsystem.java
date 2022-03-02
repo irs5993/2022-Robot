@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,22 +15,47 @@ public class ShooterSubsystem extends SubsystemBase {
   private final PWMVictorSPX left_upper;
   private final PWMVictorSPX right_upper;
 
+  private final MotorControllerGroup lower_shooter;
+  private final MotorControllerGroup upper_shooter;
+
 
   public ShooterSubsystem() {
     left_lower = new PWMVictorSPX(Constants.DriverPorts.Shooter.LEFT_LOWER);
     right_lower = new PWMVictorSPX(Constants.DriverPorts.Shooter.RIGHT_LOWER);
     left_upper = new PWMVictorSPX(Constants.DriverPorts.Shooter.LEFT_UPPER);
     right_upper = new PWMVictorSPX(Constants.DriverPorts.Shooter.RIGHT_UPPER);
+
+    right_lower.setInverted(true);
+    right_upper.setInverted(true);
+
+    lower_shooter = new MotorControllerGroup(left_lower, right_lower);
+    upper_shooter = new MotorControllerGroup(left_upper, right_upper);
+  }
+
+  public void shoot(double lowerPower, double upperPower) {
+    lower_shooter.set(lowerPower);
+    upper_shooter.set(upperPower);
   }
 
   public void setLower(double power) {
-    left_lower.set(power);
-    right_lower.set(-power);
+    lower_shooter.set(power);
   }
 
   public void setUpper(double power) {
-    left_upper.set(power);
-    right_upper.set(-power);
+    upper_shooter.set(power);
+  }
+
+  public void stopLower() {
+    lower_shooter.stopMotor();
+  }
+
+  public void stopUpper() {
+    upper_shooter.stopMotor();
+  }
+
+  public void stop() {
+    stopLower();
+    stopUpper();
   }
 
 }

@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DrivetrainSubsystem;
-
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.DriveTimedCommand;
+import frc.robot.commands.ShootCommand;
 import frc.robot.helpers.MecanumControlSupplier;
 
 
@@ -21,6 +23,7 @@ public class RobotContainer {
 
   // Defining subsystems 
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Defining commands
   private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.5, 0, 0), 5);
@@ -34,7 +37,9 @@ public class RobotContainer {
     configureDashboard();   
   }
 
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    new JoystickButton(joystick, 1).whenHeld(new ShootCommand(shooterSubsystem, 0.5, 0.7));
+  }
 
   public void configureCommands() {
     // Setting up the auto chooser

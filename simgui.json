@@ -22,6 +22,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/DrivetrainSubsystem": "Subsystem",
+      "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/MecanumDrive[1]": "MecanumDrive",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Drivetrain Subsystem": "Subsystem",
