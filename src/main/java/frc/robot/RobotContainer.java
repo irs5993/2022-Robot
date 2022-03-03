@@ -18,6 +18,7 @@ import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.DriveTimedCommand;
 import frc.robot.commands.LockTargetCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.ShootTimedCommand;
 import frc.robot.helpers.MecanumControlSupplier;
 
 
@@ -43,10 +44,12 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(joystick, 1).whenHeld(new ShootCommand(shooterSubsystem, 0.5, 0.7));
-    new JoystickButton(joystick, 3).toggleWhenPressed(new SequentialCommandGroup(
+
+    // Set to be uninterruptable so that the other commands does not interfere. 
+    new JoystickButton(joystick, 4).toggleWhenPressed(new SequentialCommandGroup(
       new LockTargetCommand(drivetrainSubsystem, visionSubsystem),
-      new ShootCommand(shooterSubsystem, 0.6, 0.8)
-    ));
+      new ShootTimedCommand(shooterSubsystem, 0.6, 0.8, 3)
+    ), false);
   }
 
   public void configureCommands() {

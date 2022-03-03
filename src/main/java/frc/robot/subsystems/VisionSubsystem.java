@@ -22,6 +22,16 @@ public class VisionSubsystem extends SubsystemBase {
     return position;
   }
 
+  public double getLowerShooterPower() {
+    double power = 0;
+    return power;
+  }
+
+  public double getUpperShooterPower() {
+    double power = 0;
+    return power;
+  }
+
   public void enableLED() {
     LED.set(1);
   }

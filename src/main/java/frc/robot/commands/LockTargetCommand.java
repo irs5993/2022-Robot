@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.helpers.MecanumControlSupplier;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -15,11 +17,21 @@ public class LockTargetCommand extends CommandBase {
 
   private final double cameraWidth = 180;
 
+  private final Timer timer;
+
   public LockTargetCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.visionSubsystem = visionSubsystem;
 
+    timer = new Timer();
+
     addRequirements(drivetrainSubsystem, visionSubsystem);
+  }
+
+  @Override
+  public void initialize() {
+    timer.reset();
+    timer.start();
   }
 
   @Override
@@ -33,6 +45,8 @@ public class LockTargetCommand extends CommandBase {
     // Determine if the target is in the center of the camera
     // If not, rotate the robot to face the target
     // When centered, change the variable "isCentered" to true
+
+    drivetrainSubsystem.drive(new MecanumControlSupplier(0, 0, 0.5));
   }
 
   @Override
@@ -43,6 +57,6 @@ public class LockTargetCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return isCentered;
+    return isCentered || timer.hasElapsed(3);
   }
 }

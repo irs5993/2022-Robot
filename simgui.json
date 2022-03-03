@@ -7,11 +7,26 @@
       "1": {
         "name": "LEFT REAR"
       },
+      "12": {
+        "name": "VISION LED"
+      },
       "2": {
         "name": "RIGHT FRONT"
       },
       "3": {
         "name": "RIGHT REAR"
+      },
+      "6": {
+        "name": "LEFT LOWER"
+      },
+      "7": {
+        "name": "RIGHT LOWER"
+      },
+      "8": {
+        "name": "LEFT UPPER"
+      },
+      "9": {
+        "name": "RIGHT UPPER"
       },
       "window": {
         "visible": true
@@ -25,6 +40,7 @@
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/MecanumDrive[1]": "MecanumDrive",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/VisionSubsystem": "Subsystem",
       "/SmartDashboard/Drivetrain Subsystem": "Subsystem",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
@@ -52,8 +68,13 @@
   },
   "sourceNames": {
     "PWM[0]": "LEFT FRONT",
+    "PWM[12]": "VISION LED",
     "PWM[1]": "LEFT REAR",
     "PWM[2]": "RIGHT FRONT",
-    "PWM[3]": "RIGHT REAR"
+    "PWM[3]": "RIGHT REAR",
+    "PWM[6]": "LEFT LOWER",
+    "PWM[7]": "RIGHT LOWER",
+    "PWM[8]": "LEFT UPPER",
+    "PWM[9]": "RIGHT UPPER"
   }
 }
