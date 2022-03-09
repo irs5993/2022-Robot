@@ -29,8 +29,7 @@ public final class Constants {
 
         public static class Intake {
             public static final int 
-            LEFT = 4,
-            RIGHT = 5;
+            MAIN = 4;
         }
 
         public static class Shooter {
