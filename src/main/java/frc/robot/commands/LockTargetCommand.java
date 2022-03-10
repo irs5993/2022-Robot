@@ -36,9 +36,6 @@ public class LockTargetCommand extends CommandBase {
 
   @Override
   public void execute() {
-    // Make sure that the LED is on
-    visionSubsystem.enableLED();
-
     // Get the target position from the vision subsystem
     double targetPosition = visionSubsystem.getTargetPosition();
 
@@ -52,7 +49,6 @@ public class LockTargetCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drivetrainSubsystem.stop();
-    visionSubsystem.disableLED();
   }
 
   @Override

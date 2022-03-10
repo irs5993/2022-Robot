@@ -9,14 +9,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class VisionSubsystem extends SubsystemBase {
-  private final PWMVictorSPX LED;
-
-  public VisionSubsystem() {
-    LED = new PWMVictorSPX(Constants.DriverPorts.VISION_LED);
-  }
+  public VisionSubsystem() {}
 
   public double getTargetPosition() {
-    // Return the GRIP information from the camera
     double position = 50;
 
     return position;
@@ -30,18 +25,6 @@ public class VisionSubsystem extends SubsystemBase {
   public double getUpperShooterPower() {
     double power = 0;
     return power;
-  }
-
-  public void enableLED() {
-    LED.set(1);
-  }
-
-  public void disableLED() {
-    LED.set(0);
-  }
- 
-  public void setLEDVoltage(double voltage) {
-    LED.set(voltage);
   }
 
   @Override
