@@ -18,7 +18,6 @@ public final class Constants {
     public static class ButtonMap {}
 
     public static class DriverPorts {
-        public static final int VISION_LED = 12;
         public static class Drivetrain {
             public static final int 
             LEFT_FRONT = 0,
@@ -30,6 +29,11 @@ public final class Constants {
         public static class Intake {
             public static final int 
             MAIN = 4;
+        }
+
+        public static class Conveyor {
+            public static final int 
+            MAIN = 5;
         }
 
         public static class Shooter {

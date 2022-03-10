@@ -5,23 +5,33 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import frc.robot.subsystems.ClimbRotatorSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveTeleopCommand;
-import frc.robot.commands.Timed.DriveTimedCommand;
 import frc.robot.commands.LockTargetCommand;
 import frc.robot.commands.PullCommand;
+import frc.robot.commands.RotateClimberCommand;
+import frc.robot.commands.RunConveyorCommand;
 import frc.robot.commands.ShootCommand;
+
 import frc.robot.commands.Timed.PullTimedCommand;
 import frc.robot.commands.Timed.ShootTimedCommand;
+import frc.robot.commands.Timed.DriveTimedCommand;
+
 import frc.robot.helpers.MecanumControlSupplier;
 
 
@@ -32,14 +42,18 @@ public class RobotContainer {
   // Defining subsystems 
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+  private final ConveyorSubsystem conveyorSubsystem = new ConveyorSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  
+  private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  private final ClimbRotatorSubsystem climbRotatorSubsystem = new ClimbRotatorSubsystem();
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+
   // Defining commands
   private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest3 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0, 0, 0.6), 5);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
+
   public RobotContainer() {
     configureButtonBindings();
     configureCommands();
@@ -48,7 +62,18 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(joystick, 1).whenHeld(new ShootCommand(shooterSubsystem, 0.5, 0.7));
+
     new JoystickButton(joystick, 3).whenHeld(new PullCommand(intakeSubsystem, 0.75));
+    new JoystickButton(joystick, 5).whenHeld(new PullCommand(intakeSubsystem, -0.75));
+
+    new JoystickButton(joystick, 4).whileHeld(new RunConveyorCommand(conveyorSubsystem, 0.75));
+    new JoystickButton(joystick, 6).whileHeld(new RunConveyorCommand(conveyorSubsystem, -0.75));
+
+    new JoystickButton(joystick, 11).whileHeld(new RotateClimberCommand(climbRotatorSubsystem, 0.7));
+    new JoystickButton(joystick, 12).whileHeld(new RotateClimberCommand(climbRotatorSubsystem, -0.7));
+
+    new JoystickButton(joystick, 9).whileHeld(new ClimbCommand(climberSubsystem, 0.7));
+    new JoystickButton(joystick, 10).whileHeld(new ClimbCommand(climberSubsystem, -0.7));
 
     // Set to be uninterruptable so that the other commands does not interfere. 
     new JoystickButton(joystick, 4).toggleWhenPressed(new SequentialCommandGroup(

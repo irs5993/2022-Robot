@@ -18,8 +18,6 @@ public class ClimberSubsystem extends SubsystemBase {
     left_motor = new PWMVictorSPX(Constants.DriverPorts.Climber.LEFT);
     right_motor = new PWMVictorSPX(Constants.DriverPorts.Climber.RIGHT);
 
-    right_motor.setInverted(true);
-
     climber = new MotorControllerGroup(left_motor, right_motor);
   }
 
