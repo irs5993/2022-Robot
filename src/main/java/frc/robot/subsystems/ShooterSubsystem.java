@@ -33,8 +33,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shoot(double lowerPower, double upperPower) {
-    lower_shooter.set(lowerPower);
-    upper_shooter.set(upperPower);
+    setLower(lowerPower);
+    setUpper(upperPower);
   }
 
   public void setLower(double power) {

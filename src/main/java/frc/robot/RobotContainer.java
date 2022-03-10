@@ -16,12 +16,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTeleopCommand;
-import frc.robot.commands.DriveTimedCommand;
+import frc.robot.commands.Timed.DriveTimedCommand;
 import frc.robot.commands.LockTargetCommand;
 import frc.robot.commands.PullCommand;
-import frc.robot.commands.PullTimedCommand;
 import frc.robot.commands.ShootCommand;
-import frc.robot.commands.ShootTimedCommand;
+import frc.robot.commands.Timed.PullTimedCommand;
+import frc.robot.commands.Timed.ShootTimedCommand;
 import frc.robot.helpers.MecanumControlSupplier;
 
 

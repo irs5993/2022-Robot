@@ -40,10 +40,16 @@ public final class Constants {
             RIGHT_UPPER = 9;
         }
 
-        public static class Climber {
+        public static class ClimbRotator {
             public static final int 
             LEFT = 10,
             RIGHT = 11;
+        }
+
+        public static class Climber {
+            public static final int 
+            LEFT = 12,
+            RIGHT = 13;
         }
     }
 }

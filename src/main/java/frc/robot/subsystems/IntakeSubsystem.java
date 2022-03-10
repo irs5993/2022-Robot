@@ -17,7 +17,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void pull(double power) {
     motor.set(power);
-    
   }
 
   public void stop() {
