@@ -32,11 +32,11 @@ public class LockTargetCommand extends CommandBase {
   public void execute() {
     // Get the target position from the vision subsystem
     double targetPosition = visionSubsystem.getTargetXPosition();
-    MecanumControlSupplier supplier = new MecanumControlSupplier(0, 0, 0);
 
     if(targetPosition >= cameraWidth/2 - errorAllowance/2 && targetPosition <= cameraWidth/2 + errorAllowance/2) {
       isCentered = true;
     } else {
+      MecanumControlSupplier supplier = new MecanumControlSupplier(0, 0, 0);
       double rotation = RMath.map(targetPosition, 0, cameraWidth, maxMotorOutput, -maxMotorOutput);
 
       if (Math.abs(rotation) < minMotorOutput) {
@@ -44,9 +44,9 @@ public class LockTargetCommand extends CommandBase {
       }
 
       supplier.setZ(rotation);
-     
+      drivetrainSubsystem.drive(supplier);
     }
-    drivetrainSubsystem.drive(supplier);
+    
   }
 
   @Override
