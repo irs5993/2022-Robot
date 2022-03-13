@@ -36,6 +36,9 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ClimbRotatorSubsystem": "Subsystem",
+      "/LiveWindow/ClimberSubsystem": "Subsystem",
+      "/LiveWindow/ConveyorSubsystem": "Subsystem",
       "/LiveWindow/DrivetrainSubsystem": "Subsystem",
       "/LiveWindow/IntakeSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",

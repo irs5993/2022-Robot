@@ -18,7 +18,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private final MotorControllerGroup lower_shooter;
   private final MotorControllerGroup upper_shooter;
 
-
   public ShooterSubsystem() {
     left_lower = new PWMVictorSPX(Constants.DriverPorts.Shooter.LEFT_LOWER);
     right_lower = new PWMVictorSPX(Constants.DriverPorts.Shooter.RIGHT_LOWER);

@@ -4,9 +4,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.helpers.MecanumControlSupplier;
+import frc.robot.helpers.RMath;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -16,34 +16,37 @@ public class LockTargetCommand extends CommandBase {
   private boolean isCentered = false;
 
   private final double cameraWidth = 180;
+  private final double errorAllowance = 6;
 
-  private final Timer timer;
+  private final double minMotorOutput = 0.3;
+  private final double maxMotorOutput= 0.7;
 
   public LockTargetCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.visionSubsystem = visionSubsystem;
 
-    timer = new Timer();
-
     addRequirements(drivetrainSubsystem, visionSubsystem);
-  }
-
-  @Override
-  public void initialize() {
-    timer.reset();
-    timer.start();
   }
 
   @Override
   public void execute() {
     // Get the target position from the vision subsystem
-    double targetPosition = visionSubsystem.getTargetPosition();
+    double targetPosition = visionSubsystem.getTargetXPosition();
+    MecanumControlSupplier supplier = new MecanumControlSupplier(0, 0, 0);
 
-    // Determine if the target is in the center of the camera
-    // If not, rotate the robot to face the target
-    // When centered, change the variable "isCentered" to true
+    if(targetPosition >= cameraWidth/2 - errorAllowance/2 && targetPosition <= cameraWidth/2 + errorAllowance/2) {
+      isCentered = true;
+    } else {
+      double rotation = RMath.map(targetPosition, 0, cameraWidth, maxMotorOutput, -maxMotorOutput);
 
-    drivetrainSubsystem.drive(new MecanumControlSupplier(0, 0, 0.5));
+      if (Math.abs(rotation) < minMotorOutput) {
+        rotation = Math.signum(rotation) * minMotorOutput;
+      }
+
+      supplier.setZ(rotation);
+     
+    }
+    drivetrainSubsystem.drive(supplier);
   }
 
   @Override
@@ -53,6 +56,6 @@ public class LockTargetCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return isCentered || timer.hasElapsed(3);
+    return isCentered;
   }
 }

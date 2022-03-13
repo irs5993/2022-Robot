@@ -27,9 +27,11 @@ import frc.robot.commands.PullCommand;
 import frc.robot.commands.RotateClimberCommand;
 import frc.robot.commands.RunConveyorCommand;
 import frc.robot.commands.ShootCommand;
-
+import frc.robot.commands.ShootVisionCommand;
 import frc.robot.commands.Timed.PullTimedCommand;
+import frc.robot.commands.Timed.RunConveyorTimedCommand;
 import frc.robot.commands.Timed.ShootTimedCommand;
+import frc.robot.commands.Timed.ShootVisionTimedCommand;
 import frc.robot.commands.Timed.DriveTimedCommand;
 
 import frc.robot.helpers.MecanumControlSupplier;
@@ -62,6 +64,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(joystick, 1).whenHeld(new ShootCommand(shooterSubsystem, 0.5, 0.7));
+    new JoystickButton(joystick, 8).whenHeld(new ShootVisionCommand(shooterSubsystem, visionSubsystem));
 
     new JoystickButton(joystick, 3).whenHeld(new PullCommand(intakeSubsystem, 0.75));
     new JoystickButton(joystick, 5).whenHeld(new PullCommand(intakeSubsystem, -0.75));
@@ -74,13 +77,14 @@ public class RobotContainer {
 
     new JoystickButton(joystick, 9).whileHeld(new ClimbCommand(climberSubsystem, 0.7));
     new JoystickButton(joystick, 10).whileHeld(new ClimbCommand(climberSubsystem, -0.7));
+    
 
     // Set to be uninterruptable so that the other commands does not interfere. 
     new JoystickButton(joystick, 4).toggleWhenPressed(new SequentialCommandGroup(
       new LockTargetCommand(drivetrainSubsystem, visionSubsystem),
       new ParallelCommandGroup( 
-        new PullTimedCommand(intakeSubsystem, 0.75, 4),
-        new ShootTimedCommand(shooterSubsystem, 0.6, 0.8, 4)
+        new RunConveyorTimedCommand(conveyorSubsystem, 0.75, 4),
+        new ShootVisionTimedCommand(shooterSubsystem, visionSubsystem, 4)
       )
     ), false);
   }
