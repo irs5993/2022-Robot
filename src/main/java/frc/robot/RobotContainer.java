@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ClimbRotatorSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -83,8 +83,8 @@ public class RobotContainer {
     new JoystickButton(joystick, 4).toggleWhenPressed(new SequentialCommandGroup(
       new LockTargetCommand(drivetrainSubsystem, visionSubsystem),
       new ParallelCommandGroup( 
-        new RunConveyorTimedCommand(conveyorSubsystem, 0.75, 4),
-        new ShootVisionTimedCommand(shooterSubsystem, visionSubsystem, 4)
+        new ShootVisionTimedCommand(shooterSubsystem, visionSubsystem, 5),
+        new SequentialCommandGroup(new WaitCommand(3),  new RunConveyorTimedCommand(conveyorSubsystem, 0.75, 2))
       )
     ), false);
   }

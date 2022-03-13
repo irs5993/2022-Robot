@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,6 +20,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final PWMVictorSPX right_rear;
 
   private final MecanumDrive drive_base;
+  private final AHRS gyro;
 
   public DrivetrainSubsystem() {
     left_front = new PWMVictorSPX(Constants.DriverPorts.Drivetrain.LEFT_FRONT);
@@ -25,10 +29,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
     right_rear = new PWMVictorSPX(Constants.DriverPorts.Drivetrain.RIGHT_REAR);
 
     drive_base = new MecanumDrive(left_front, left_rear, right_front, right_rear);
+    gyro = new AHRS(SPI.Port.kMXP);
   }
 
   public void drive(MecanumControlSupplier mecanumControlSupplier) {
-    drive_base.driveCartesian(mecanumControlSupplier.getY(), mecanumControlSupplier.getX(), mecanumControlSupplier.getZ());
+    drive_base.driveCartesian(mecanumControlSupplier.getY(), mecanumControlSupplier.getX(), mecanumControlSupplier.getZ(), gyro.getAngle());
   }
 
   public void stop() {
