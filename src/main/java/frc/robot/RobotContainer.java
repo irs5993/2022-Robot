@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.ArmReleaseSubsystem;
 import frc.robot.subsystems.ClimbRotatorSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -19,7 +20,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-
+import frc.robot.Constants.DriverPorts.ArmRelease;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.LockTargetCommand;
@@ -48,12 +49,32 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   private final ClimbRotatorSubsystem climbRotatorSubsystem = new ClimbRotatorSubsystem();
+  private final ArmReleaseSubsystem armReleaseSubsystem = new ArmReleaseSubsystem();
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   // Defining commands
   private final DriveTimedCommand autoTest1 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest2 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.5, 0, 0), 5);
   private final DriveTimedCommand autoTest3 = new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(0, 0, 0.6), 5);
+  private final SequentialCommandGroup defaultAuto = new SequentialCommandGroup(
+    new ParallelCommandGroup(
+      new ShootTimedCommand(shooterSubsystem, 0.7, 0.5, 4),
+      new SequentialCommandGroup(new WaitCommand(2), new RunConveyorTimedCommand(conveyorSubsystem, 0.5, 2))
+    ),
+    new WaitCommand(2),
+    new ParallelCommandGroup(
+      new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.5, 0, 0), 4),
+      new PullTimedCommand(intakeSubsystem, 0.6, 4),
+      new RunConveyorTimedCommand(conveyorSubsystem, 0.6, 4),
+
+      new SequentialCommandGroup(
+        new WaitCommand(2), new ShootTimedCommand(shooterSubsystem, 0.5, 0.5, 2)
+      )
+    ),
+    new WaitCommand(1),
+    new DriveTimedCommand(drivetrainSubsystem, new MecanumControlSupplier(-0.5, 0, 0), 2)
+  );
+
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
@@ -91,7 +112,8 @@ public class RobotContainer {
 
   public void configureCommands() {
     // Setting up the auto chooser
-    autoChooser.setDefaultOption("Drive Forward", autoTest1);
+    autoChooser.setDefaultOption("Default Command", defaultAuto);
+    autoChooser.addOption("Drive Forward", autoTest1);
     autoChooser.addOption("Drive Backward", autoTest2);
     autoChooser.addOption("Turn Right", autoTest3);
 

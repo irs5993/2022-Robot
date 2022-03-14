@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ClimbRotatorSubsystem extends SubsystemBase {
+public class ArmReleaseSubsystem extends SubsystemBase {
   private final PWMVictorSPX motor;
 
-  public ClimbRotatorSubsystem() {
-    motor = new PWMVictorSPX(Constants.DriverPorts.ClimbRotator.MAIN);
+  public ArmReleaseSubsystem() {
+    motor = new PWMVictorSPX(Constants.DriverPorts.ArmRelease.MAIN);
   }
 
   public void rotate(double power) {

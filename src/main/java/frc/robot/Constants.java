@@ -20,9 +20,9 @@ public final class Constants {
     public static class DriverPorts {
         public static class Drivetrain {
             public static final int 
-            LEFT_FRONT = 0,
-            LEFT_REAR = 1,
-            RIGHT_FRONT = 2,
+            LEFT_FRONT = 2,
+            LEFT_REAR = 0,
+            RIGHT_FRONT = 1,
             RIGHT_REAR = 3;
         }
 
@@ -46,14 +46,18 @@ public final class Constants {
 
         public static class ClimbRotator {
             public static final int 
-            LEFT = 10,
-            RIGHT = 11;
+            MAIN = 10;
         }
 
         public static class Climber {
             public static final int 
-            LEFT = 12,
-            RIGHT = 13;
+            LEFT = 11,
+            RIGHT = 12;
+        }
+
+        public static class ArmRelease {
+            public static final int 
+            MAIN = 13;
         }
     }
 }
