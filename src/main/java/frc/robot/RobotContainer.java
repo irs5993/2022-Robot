@@ -82,7 +82,7 @@ public class RobotContainer {
     // Set to be uninterruptable so that the other commands does not interfere. 
     new JoystickButton(joystick, 4).toggleWhenPressed(new SequentialCommandGroup(
       new LockTargetCommand(drivetrainSubsystem, visionSubsystem),
-      new ParallelCommandGroup( 
+      new ParallelCommandGroup(
         new ShootVisionTimedCommand(shooterSubsystem, visionSubsystem, 5),
         new SequentialCommandGroup(new WaitCommand(3),  new RunConveyorTimedCommand(conveyorSubsystem, 0.75, 2))
       )

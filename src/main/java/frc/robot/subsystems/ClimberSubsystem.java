@@ -15,12 +15,15 @@ public class ClimberSubsystem extends SubsystemBase {
   private final PWMVictorSPX right_motor;
   private final MotorControllerGroup climber;
 
-  private final DigitalInput left_switch = new DigitalInput(0);
-  private final DigitalInput right_switch = new DigitalInput(1);
+  private final DigitalInput left_switch;
+  private final DigitalInput right_switch;
 
   public ClimberSubsystem() {
     left_motor = new PWMVictorSPX(Constants.DriverPorts.Climber.LEFT);
     right_motor = new PWMVictorSPX(Constants.DriverPorts.Climber.RIGHT);
+
+    left_switch = new DigitalInput(0);
+    right_switch = new DigitalInput(1);
 
     climber = new MotorControllerGroup(left_motor, right_motor);
   }
