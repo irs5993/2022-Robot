@@ -25,6 +25,7 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveTeleopCommand;
 import frc.robot.commands.LockTargetCommand;
 import frc.robot.commands.PullCommand;
+import frc.robot.commands.ReleaseArmCommand;
 import frc.robot.commands.RotateClimberCommand;
 import frc.robot.commands.RunConveyorCommand;
 import frc.robot.commands.ShootCommand;
@@ -86,6 +87,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(joystick, 1).whenHeld(new ShootCommand(shooterSubsystem, 0.5, 0.7));
     new JoystickButton(joystick, 8).whenHeld(new ShootVisionCommand(shooterSubsystem, visionSubsystem));
+
+    new JoystickButton(joystick, 7).whenHeld(new ReleaseArmCommand(armReleaseSubsystem, 0.8));
+    new JoystickButton(joystick, 2).whenHeld(new ReleaseArmCommand(armReleaseSubsystem, -0.8));
 
     new JoystickButton(joystick, 3).whenHeld(new PullCommand(intakeSubsystem, 0.75));
     new JoystickButton(joystick, 5).whenHeld(new PullCommand(intakeSubsystem, -0.75));
