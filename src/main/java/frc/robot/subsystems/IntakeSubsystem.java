@@ -13,6 +13,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     motor = new PWMVictorSPX(Constants.DriverPorts.Intake.MAIN);
+    motor.setInverted(true);
   }
 
   public void pull(double power) {

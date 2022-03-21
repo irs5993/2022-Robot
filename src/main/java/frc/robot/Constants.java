@@ -14,7 +14,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final int JOYSTICK = 0;
-
+    public static final double FEEDER_POWER = 0.6;
     public static class ButtonMap {}
 
     public static class DriverPorts {
@@ -28,36 +28,36 @@ public final class Constants {
 
         public static class Intake {
             public static final int 
-            MAIN = 4;
+            MAIN = 9;
         }
 
         public static class Conveyor {
             public static final int 
-            MAIN = 5;
+            MAIN = 4;
         }
 
         public static class Shooter {
             public static final int 
-            LEFT_LOWER = 6,
-            RIGHT_LOWER = 7,
-            LEFT_UPPER = 8,
-            RIGHT_UPPER = 9;
+            LEFT_LOWER = 19,
+            RIGHT_LOWER = 18,
+            LEFT_UPPER = 17,
+            RIGHT_UPPER = 8;
         }
 
         public static class ClimbRotator {
             public static final int 
-            MAIN = 10;
+            MAIN = 5;
         }
 
         public static class Climber {
             public static final int 
-            LEFT = 11,
-            RIGHT = 12;
+            LEFT = 16,
+            RIGHT = 7;
         }
 
         public static class ArmRelease {
             public static final int 
-            MAIN = 13;
+            MAIN = 6;
         }
     }
 }

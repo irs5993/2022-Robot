@@ -35,8 +35,19 @@ public class ClimberSubsystem extends SubsystemBase {
     climber.set(power);
   }
 
+  public void setLeftPower(double power) {
+    left_motor.set(power);
+  }
+
+  public void setRightPower(double power) {
+    right_motor.set(power);
+  }
+
+
+
   public boolean isLocked() {
-    return getLeftSwitchStatus() || getRightSwitchStatus();
+   // return getLeftSwitchStatus() || getRightSwitchStatus();
+   return false;
   }
 
   public boolean getLeftSwitchStatus() { 

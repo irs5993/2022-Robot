@@ -13,7 +13,6 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class DriveTeleopCommand extends CommandBase {
   private final DrivetrainSubsystem drivetrainSubsystem;
-  private final MecanumControlSupplier mecanumControlSupplier;
   private final Joystick joystick;
 
   private final double
@@ -22,7 +21,6 @@ public class DriveTeleopCommand extends CommandBase {
 
   public DriveTeleopCommand(DrivetrainSubsystem drivetrainSubsystem, Joystick joystick) {
     this.drivetrainSubsystem = drivetrainSubsystem;
-    this.mecanumControlSupplier = new MecanumControlSupplier(0, 0, 0);
     this.joystick = joystick;
 
     addRequirements(drivetrainSubsystem);
@@ -30,13 +28,19 @@ public class DriveTeleopCommand extends CommandBase {
 
   @Override
   public void execute() {
-    mecanumControlSupplier.set(joystick.getY(), joystick.getX(), joystick.getZ());
+    MecanumControlSupplier supplier = new MecanumControlSupplier(joystick.getY(), -joystick.getX(), -joystick.getZ());
 
     // Map the joystick slider between [min_mult, max_mult]
-    double multiplier = RMath.map(joystick.getRawAxis(3), 1, -1, min_mult, max_mult);
-    mecanumControlSupplier.multiply(multiplier);
+    // double multiplier = RMath.map(joystick.getRawAxis(3), 1, -1, min_mult, max_mult);
+    // supplier.multiply(multiplier);
 
-    drivetrainSubsystem.drive(mecanumControlSupplier);
+
+    if (Math.abs(joystick.getZ()) < 0.15) {
+      supplier.setZ(0);
+    } 
+
+
+    drivetrainSubsystem.drive(supplier);
   }
 
   @Override

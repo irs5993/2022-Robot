@@ -28,12 +28,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
     right_front = new PWMVictorSPX(Constants.DriverPorts.Drivetrain.RIGHT_FRONT);
     right_rear = new PWMVictorSPX(Constants.DriverPorts.Drivetrain.RIGHT_REAR);
 
+    left_front.setInverted(true);
+    left_rear.setInverted(true);
+
     drive_base = new MecanumDrive(left_front, left_rear, right_front, right_rear);
     gyro = new AHRS(SPI.Port.kMXP);
   }
 
   public void drive(MecanumControlSupplier mecanumControlSupplier) {
-    drive_base.driveCartesian(mecanumControlSupplier.getY(), mecanumControlSupplier.getX(), mecanumControlSupplier.getZ(), gyro.getAngle());
+    //drive_base.driveCartesian(mecanumControlSupplier.getY(), mecanumControlSupplier.getX(), mecanumControlSupplier.getZ(), gyro.getAngle());
+    drive_base.driveCartesian(mecanumControlSupplier.getY(), mecanumControlSupplier.getX(), mecanumControlSupplier.getZ());
   }
 
   public void stop() {

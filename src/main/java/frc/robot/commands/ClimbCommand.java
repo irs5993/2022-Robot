@@ -21,6 +21,7 @@ public class ClimbCommand extends CommandBase {
   @Override
   public void execute() {
     climberSubsystem.climb(power);
+    System.out.println(power);
   }
 
   @Override
