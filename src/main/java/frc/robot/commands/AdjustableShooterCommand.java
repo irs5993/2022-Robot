@@ -26,7 +26,6 @@ public class AdjustableShooterCommand extends CommandBase {
   public void execute() {
     double power = -RMath.map(joystick.getRawAxis(3), 1, -1, 0.2, 1);
     shooterSubsystem.shoot(power, Constants.FEEDER_POWER);
-    System.out.println(power);
     SmartDashboard.putNumber("Shooting Power", power);
 
 
