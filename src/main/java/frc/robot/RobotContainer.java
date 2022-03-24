@@ -93,47 +93,32 @@ public class RobotContainer {
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public RobotContainer() {
-    CameraServer.getInstance().startAutomaticCapture();
     configureButtonBindings();
     configureCommands();
     configureDashboard();   
   }
 
   private void configureButtonBindings() {
-    new JoystickButton(joystick, 1).whileHeld(new ShootCommand(shooterSubsystem, -0.79, Constants.FEEDER_POWER));
+    new JoystickButton(joystick, 1).whileHeld(new ShootCommand(shooterSubsystem, -0.8, Constants.FEEDER_POWER));
+        
+    new JoystickButton(joystick, 9).toggleWhenActive(new LockTargetCommand(drivetrainSubsystem, visionSubsystem));
   
     new JoystickButton(joystick, 3).whileHeld(
       new ParallelCommandGroup(
-        new PullCommand(intakeSubsystem, 0.7),  
-        new RunConveyorCommand(conveyorSubsystem, 0.72)
+        new PullCommand(intakeSubsystem, 1),  
+        new RunConveyorCommand(conveyorSubsystem, 1)
       )
     );
 
     new JoystickButton(joystick, 5).whileHeld(
       new ParallelCommandGroup(
-        new PullCommand(intakeSubsystem, -0.7),  
-        new RunConveyorCommand(conveyorSubsystem, -0.72)
+        new PullCommand(intakeSubsystem, -1),  
+        new RunConveyorCommand(conveyorSubsystem, -1)
       )
     );
 
-    new JoystickButton(joystick, 4).whileHeld(new RunConveyorCommand(conveyorSubsystem, 0.4));
-    new JoystickButton(joystick, 6).whileHeld(new RunConveyorCommand(conveyorSubsystem, -0.4));
-
-    new JoystickButton(joystick, 9).whileHeld(
-        new RunConveyorCommand(conveyorSubsystem, 1)
-    );
-
-    new JoystickButton(joystick, 10).whileHeld(
-        new RunConveyorCommand(conveyorSubsystem, -1)
-    );
-    
-    new JoystickButton(joystick, 11).whileHeld(
-        new PullCommand(intakeSubsystem, 1)
-    );
-
-    new JoystickButton(joystick, 12).whileHeld(
-        new PullCommand(intakeSubsystem, -1)
-    );
+    new JoystickButton(joystick, 4).whileHeld(new RunConveyorCommand(conveyorSubsystem, 1));
+    new JoystickButton(joystick, 6).whileHeld(new RunConveyorCommand(conveyorSubsystem, -1));
     
     // new JoystickButton(joystick, 1).whileHeld(new ShootCommand(shooterSubsystem, -0.43, -0.14));
     
@@ -169,6 +154,8 @@ public class RobotContainer {
   }
 
   public void configureDashboard() {
+    CameraServer.startAutomaticCapture();
+
     SmartDashboard.putData(autoChooser);
     SmartDashboard.putData("Drivetrain Subsystem", drivetrainSubsystem);
   }

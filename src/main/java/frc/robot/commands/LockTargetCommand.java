@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.helpers.MecanumControlSupplier;
 import frc.robot.helpers.RMath;
@@ -36,14 +37,15 @@ public class LockTargetCommand extends CommandBase {
     if(targetPosition >= cameraWidth/2 - errorAllowance/2 && targetPosition <= cameraWidth/2 + errorAllowance/2) {
       isCentered = true;
     } else {
-      MecanumControlSupplier supplier = new MecanumControlSupplier(0, 0, 0);
       double rotation = RMath.map(targetPosition, 0, cameraWidth, maxMotorOutput, -maxMotorOutput);
 
       if (Math.abs(rotation) < minMotorOutput) {
         rotation = Math.signum(rotation) * minMotorOutput;
       }
 
-      supplier.setZ(rotation);
+      SmartDashboard.putNumber("Rotation Correction Voltage", rotation);
+
+      MecanumControlSupplier supplier = new MecanumControlSupplier(0, 0, rotation);
       drivetrainSubsystem.drive(supplier);
     }
     

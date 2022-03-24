@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.helpers.RMath;
 
@@ -16,7 +17,6 @@ public class VisionSubsystem extends SubsystemBase {
   private double[] xRaw;
   private double[] yRaw;
 
-  private boolean targetFound = false;
   private double targetX;
   private double targetY;    
 
@@ -25,7 +25,7 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public boolean isTargetFound() {
-    return targetFound;
+    return xRaw.length > 0 && yRaw.length > 0;
   }
 
   public double getTargetXPosition() {
@@ -47,14 +47,18 @@ public class VisionSubsystem extends SubsystemBase {
     return power;
   }
 
-  private boolean deduceVisibility() {
-    if (xRaw.length > 0 && yRaw.length > 0) {
-      targetX = xRaw[0];
-      targetY = yRaw[0];
-      return true;
-    } 
+  private double[] calculateTargetCenter() {
+    double tx, ty;
 
-    return false;   
+    if (xRaw.length % 2 == 0) {
+      tx = (xRaw[xRaw.length / 2] + xRaw[xRaw.length / 2 - 1]) / 2;
+      ty = (yRaw[yRaw.length / 2] + yRaw[yRaw.length / 2 - 1]) / 2;
+    } else {
+      tx = xRaw.length > 1 ? xRaw[(xRaw.length - 1) / 2] : xRaw[0];
+      ty = yRaw.length > 1 ? yRaw[(yRaw.length - 1) / 2] : yRaw[0];
+    }
+
+    return new double[] {tx, ty};
   }
 
 
@@ -62,6 +66,14 @@ public class VisionSubsystem extends SubsystemBase {
   public void periodic() {
     xRaw = table.getEntry("centerX").getDoubleArray(defaultValue);
     yRaw = table.getEntry("centerY").getDoubleArray(defaultValue);
-    targetFound = deduceVisibility();
+
+    if (isTargetFound()) {
+      double[] target = calculateTargetCenter();
+      targetX = target[0];
+      targetY = target[1];
+
+      SmartDashboard.putNumber("Target X", targetX);
+      SmartDashboard.putNumber("Target Y", targetY);
+    }
   }
 }
