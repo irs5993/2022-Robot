@@ -24,11 +24,6 @@ public class ShooterSubsystem extends SubsystemBase {
     left_upper = new PWMVictorSPX(Constants.DriverPorts.Shooter.LEFT_UPPER);
     right_upper = new PWMVictorSPX(Constants.DriverPorts.Shooter.RIGHT_UPPER);
 
-    left_lower.setInverted(true);
-    right_lower.setInverted(true);
-
-    left_upper.setInverted(true);
-
     lower_shooter = new MotorControllerGroup(left_lower, right_lower);
     upper_shooter = new MotorControllerGroup(left_upper, right_upper);
   }
@@ -40,7 +35,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setLower(double power) {
-    lower_shooter.set(power);
+    lower_shooter.set(-power);
+
   }
 
   public void setUpper(double power) {

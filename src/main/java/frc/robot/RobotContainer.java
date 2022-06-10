@@ -105,15 +105,15 @@ public class RobotContainer {
   
     new JoystickButton(joystick, 3).whileHeld(
       new ParallelCommandGroup(
-        new PullCommand(intakeSubsystem, 1),  
-        new RunConveyorCommand(conveyorSubsystem, 1)
+        new PullCommand(intakeSubsystem, 0.75),  
+        new RunConveyorCommand(conveyorSubsystem, 0.75)
       )
     );
 
     new JoystickButton(joystick, 5).whileHeld(
       new ParallelCommandGroup(
-        new PullCommand(intakeSubsystem, -1),  
-        new RunConveyorCommand(conveyorSubsystem, -1)
+        new PullCommand(intakeSubsystem, -0.75),  
+        new RunConveyorCommand(conveyorSubsystem, -0.75)
       )
     );
 

@@ -28,7 +28,7 @@ public final class Constants {
 
         public static class Intake {
             public static final int 
-            MAIN = 9;
+            MAIN = 5;
         }
 
         public static class Conveyor {
@@ -38,26 +38,27 @@ public final class Constants {
 
         public static class Shooter {
             public static final int 
-            LEFT_LOWER = 19,
-            RIGHT_LOWER = 18,
-            LEFT_UPPER = 17,
-            RIGHT_UPPER = 8;
+            LEFT_LOWER = 6,
+            RIGHT_LOWER = 7,
+
+            LEFT_UPPER = 8,
+            RIGHT_UPPER = 9;
         }
 
         public static class ClimbRotator {
             public static final int 
-            MAIN = 5;
+            MAIN = 13;
         }
 
         public static class Climber {
             public static final int 
             LEFT = 16,
-            RIGHT = 7;
+            RIGHT = 12;
         }
 
         public static class ArmRelease {
             public static final int 
-            MAIN = 6;
+            MAIN = 11;
         }
     }
 }

@@ -30,6 +30,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     left_front.setInverted(true);
     left_rear.setInverted(true);
+    //right_front.setInverted(true);
 
     drive_base = new MecanumDrive(left_front, left_rear, right_front, right_rear);
     gyro = new AHRS(SPI.Port.kMXP);

@@ -40,12 +40,12 @@ public class DriveTeleopCommand extends CommandBase {
     supplier.multiply(multiplier);
 
     // Applying deadband to the joystick
-    supplier.setZ(RMath.deadband(supplier.getZ(), stick_deadzone));
+    //supplier.setZ(RMath.deadband(supplier.getZ(), stick_deadzone));
 
     // Applying the slew rate filter to the joystick
-    supplier.setY(filter.calculate(supplier.getY()));
-    supplier.setX(filter.calculate(supplier.getX()));
-    supplier.setZ(filter.calculate(supplier.getZ()));
+    // supplier.setY(filter.calculate(supplier.getY()));
+    // supplier.setX(filter.calculate(supplier.getX()));
+    // supplier.setZ(filter.calculate(supplier.getZ()));
 
     drivetrainSubsystem.drive(supplier);
   }
