@@ -74,16 +74,15 @@ public class RobotContainer {
         new WaitCommand(2.5), 
         new SequentialCommandGroup(
           new ParallelCommandGroup(
-          new PullTimedCommand(intakeSubsystem, 0.8, 1.5), 
-          new RunConveyorTimedCommand(conveyorSubsystem, 0.4, 1.5)
-        ),
-        new WaitCommand(3.2),
-        new ParallelCommandGroup(
-          new PullTimedCommand(intakeSubsystem, 0.8, 1.5), 
-          new RunConveyorTimedCommand(conveyorSubsystem, 0.4, 1.5)
+            new PullTimedCommand(intakeSubsystem, 0.8, 1.5), 
+            new RunConveyorTimedCommand(conveyorSubsystem, 0.4, 1.5)
+          ),
+          new WaitCommand(3.2),
+          new ParallelCommandGroup(
+            new PullTimedCommand(intakeSubsystem, 0.8, 1.5), 
+            new RunConveyorTimedCommand(conveyorSubsystem, 0.4, 1.5)
+          )
         )
-        )
-        
       )
     )
   );
